@@ -1,0 +1,23 @@
+<!-- movies/templates/movies/top_rated.html -->
+{% extends 'movies/base.html' %}
+{% block content %}
+<div class="movies-list">
+    {% for movie in movies %}
+        <div class="movie-item">
+            <a href="{% url 'movie_detail' movie.id %}">
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+                <p class="title">{{ movie.title }}</p>
+                <p class="rating">{{ movie.vote_average }}</p>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+<div class="pagination">
+    {% if movies.previous %}
+        <a href="?page={{ movies.previous }}">Previous</a>
+    {% endif %}
+    {% if movies.next %}
+        <a href="?page={{ movies.next }}">Next</a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!-- movies/templates/movies/movie_detail.html -->
+{% extends 'movies/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    {% if movie.backdrop_path %}
+    <div class="banner mb-4">
+        <img src="https://image.tmdb.org/t/p/w1280{{ movie.backdrop_path }}" class="img-fluid w-100" alt="{{ movie.title }}">
+    </div>
+    {% endif %}
+    
+    <h1 class="text-center">{{ movie.title }}</h1>
+    
+    <!-- Movie Information -->
+    <div class="movie-info mt-4 text-center">
+        <p>{{ movie.overview }}</p>
+        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <p><strong>Rating:</strong> {{ movie.vote_average }}</p>
+    </div>
+    
+    <!-- Cast -->
+    <h2 class="mt-5">Cast</h2>
+    <div class="row">
+        {% for actor in cast %}
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card">
+                    {% if actor.profile_path %}
+                    <img src="https://image.tmdb.org/t/p/w200{{ actor.profile_path }}" class="card-img-top" alt="{{ actor.name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/200x300" class="card-img-top" alt="{{ actor.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ actor.name }}</h5>
+                        <p class="card-text">{{ actor.character }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
