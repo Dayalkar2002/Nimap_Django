@@ -111,8 +111,19 @@ nav form button {
 /* movies/static/movies/style.css */
 
 .banner img {
-    max-height: 300px;
+    max-height: 400px;
     object-fit: cover;
+}
+
+.banner-content {
+    background: rgba(0, 0, 0, 0.6);
+    width: 50%;
+}
+
+.banner-poster img {
+    width: 200px;
+    height: auto;
+    border: 5px solid white;
 }
 
 .movie-info {

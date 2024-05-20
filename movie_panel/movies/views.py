@@ -60,8 +60,10 @@ def movie_detail(request, movie_id):
     movie = movie_response.json()
     cast_response = requests.get(f'{BASE_URL}/movie/{movie_id}/credits?api_key={API_KEY}&language=en-US')
     cast = cast_response.json().get('cast', [])
+    images_response = requests.get(f'{BASE_URL}/movie/{movie_id}/images?api_key={API_KEY}&language=en-US')
+    images = images_response.json().get('backdrops', [])
     
-    return render(request, 'movies/movie_detail.html', {'movie': movie, 'cast': cast})
+    return render(request, 'movies/movie_detail.html', {'movie': movie, 'cast': cast, 'images': images})
 
 def search(request):
     query = request.GET.get('query')
