@@ -6,14 +6,18 @@ import requests
 API_KEY = 'c45a857c193f6302f2b5061c3b85e743'
 BASE_URL = 'https://api.themoviedb.org/3'
 
+
 def home(request):
-    response = requests.get(f'{BASE_URL}/movie/popular?api_key={API_KEY}&language=en-US&page=1')
+    response = requests.get(
+        f'{BASE_URL}/movie/popular?api_key={API_KEY}&language=en-US&page=1')
     movies = response.json().get('results', [])
     return render(request, 'movies/home.html', {'movies': movies})
 
+
 def top_rated(request):
     page = request.GET.get('page', 1)
-    response = requests.get(f'{BASE_URL}/movie/top_rated?api_key={API_KEY}&language=en-US&page={page}')
+    response = requests.get(
+        f'{BASE_URL}/movie/top_rated?api_key={API_KEY}&language=en-US&page={page}')
     movies_data = response.json()
     movies = movies_data.get('results', [])
     paginator = Paginator(movies, 20)  # Show 20 movies per page
@@ -22,7 +26,7 @@ def top_rated(request):
         movies_page = paginator.page(page)
     except PageNotAnInteger:
         movies_page = paginator.page(1)
-    except EmptyPage: 
+    except EmptyPage:
         movies_page = paginator.page(paginator.num_pages)
 
     context = {
@@ -33,9 +37,11 @@ def top_rated(request):
     }
     return render(request, 'movies/top_rated.html', context)
 
+
 def upcoming(request):
     page = request.GET.get('page', 1)
-    response = requests.get(f'{BASE_URL}/movie/upcoming?api_key={API_KEY}&language=en-US&page={page}')
+    response = requests.get(
+        f'{BASE_URL}/movie/upcoming?api_key={API_KEY}&language=en-US&page={page}')
     movies_data = response.json()
     movies = movies_data.get('results', [])
     paginator = Paginator(movies, 20)  # Show 20 movies per page
@@ -55,18 +61,24 @@ def upcoming(request):
     }
     return render(request, 'movies/upcoming.html', context)
 
+
 def movie_detail(request, movie_id):
-    movie_response = requests.get(f'{BASE_URL}/movie/{movie_id}?api_key={API_KEY}&language=en-US')
+    movie_response = requests.get(
+        f'{BASE_URL}/movie/{movie_id}?api_key={API_KEY}&language=en-US')
     movie = movie_response.json()
-    cast_response = requests.get(f'{BASE_URL}/movie/{movie_id}/credits?api_key={API_KEY}&language=en-US')
+    cast_response = requests.get(
+        f'{BASE_URL}/movie/{movie_id}/credits?api_key={API_KEY}&language=en-US')
     cast = cast_response.json().get('cast', [])
-    images_response = requests.get(f'{BASE_URL}/movie/{movie_id}/images?api_key={API_KEY}&language=en-US')
+    images_response = requests.get(
+        f'{BASE_URL}/movie/{movie_id}/images?api_key={API_KEY}&language=en-US')
     images = images_response.json().get('backdrops', [])
-    
+
     return render(request, 'movies/movie_detail.html', {'movie': movie, 'cast': cast, 'images': images})
+
 
 def search(request):
     query = request.GET.get('query')
-    response = requests.get(f'{BASE_URL}/search/movie?api_key={API_KEY}&language=en-US&query={query}&page=1')
+    response = requests.get(
+        f'{BASE_URL}/search/movie?api_key={API_KEY}&language=en-US&query={query}&page=1')
     movies = response.json().get('results', [])
     return render(request, 'movies/home.html', {'movies': movies})
